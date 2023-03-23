@@ -1,10 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'base.html' %}
+{% block title %}Routes{% endblock %}
+
+{% block content %}
+  <h1>Here you can see all routes</h1>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Hotel</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for trip in trip_list %}
+        <tr>
+          <td>{{ trip.title }}</td>
+          <td>{{ trip.description }}</td>
+          <td>{{ trip.price }}</td>
+          <td>{{ trip.hotel }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

@@ -1,10 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container mt-5">
+    <h1>{{ ticket }}</h1>
+    <table class="table">
+      <tbody>
+        <tr>
+          <th>User:</th>
+          <td>{{ ticket.user }}</td>
+        </tr>
+        <tr>
+          <th>Price:</th>
+          <td>{{ ticket.price }}</td>
+        </tr>
+        <tr>
+          <th>Route:</th>
+          <td>{{ ticket.route }}</td>
+        </tr>
+        <tr>
+          <th>Date:</th>
+          <td>{{ ticket.date }}</td>
+        </tr>
+        <tr>
+          <th>Number:</th>
+          <td>{{ ticket.number }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

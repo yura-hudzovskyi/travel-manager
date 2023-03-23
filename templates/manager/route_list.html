@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}Routes{% endblock %}
+
+{% block content %}
+  <h1>Routes</h1>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Departure</th>
+        <th>Arrival</th>
+        <th>Duration</th>
+        <th>Trip</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for route in routes %}
+        <tr>
+          <td>{{ route.departure }}</td>
+          <td>{{ route.arrival }}</td>
+          <td>{{ route.duration }}</td>
+          <td>{{ route.trip.title }}</td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="4">No routes found.</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
