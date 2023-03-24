@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container my-5">
+    <div class="row">
+      <div class="col-md-8">
+        <h1>{{ route.departure }} - {{ route.arrival }}</h1>
+        <p>Duration: {{ route.duration }}</p>
+        <p>Trip: <a href="{% url 'manager:trip-list' %}">{{ route.trip.title }}</a></p>
+      </div>
+    </div>
+  </div>
+{% endblock %}

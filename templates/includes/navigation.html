@@ -1,0 +1,23 @@
+ <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+      <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+        <span class="fs-4" style="padding-left: 20px" >Travel Manager</span>
+      </a>
+
+      <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+        <li><a href="/" class="nav-link px-2 link-secondary">Home</a></li>
+        <li><a href="{% url 'manager:ticket-list' %}" class="nav-link px-2 link-dark">My tickets</a></li>
+        <li><a href="{% url 'manager:route-list' %}" class="nav-link px-2 link-dark">Routes</a></li>
+        <li><a href="{% url 'manager:trip-list' %}" class="nav-link px-2 link-dark">Trips</a></li>
+        <li><a href="{% url 'manager:hotel-list' %}" class="nav-link px-2 link-dark">Hotels</a></li>
+      </ul>
+
+      <div class="col-md-4 text-end">
+        {% if user.is_authenticated %}
+          <span class="fs-6" style="padding-right: 8px ">{{ user.username }}</span>
+          <a href="{% url 'logout' %}" type="button" class="btn btn-outline-primary me-2">Logout</a>
+        {% else %}
+          <a href="{% url 'login' %}" type="button" class="btn btn-outline-primary me-2">Login</a>
+        {% endif %}
+
+      </div>
+ </header>

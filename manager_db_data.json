@@ -1,0 +1,62 @@
+[
+  {
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+      "username": "manager",
+      "email": "manager@example.com",
+      "password": "password123",
+      "first_name": "Manager",
+      "last_name": "Doe",
+      "is_staff": true,
+      "is_superuser": true,
+      "is_active": true,
+      "date_joined": "2023-03-23T14:52:55.749Z"
+    }
+  },
+  {
+    "model": "manager.hotel",
+
+    "pk": 1,
+    "fields": {
+      "name": "Hotel A",
+      "address": "123 Main St",
+      "price": 100.00,
+      "description": "A nice hotel"
+    }
+  },
+  {
+    "model": "manager.trip",
+
+    "pk": 1,
+    "fields": {
+      "title": "Trip A",
+      "description": "A fun trip",
+      "price": 200.00,
+      "hotel": 1
+    }
+  },
+  {
+    "model": "manager.route",
+
+    "pk": 1,
+    "fields": {
+      "departure": "City A",
+      "arrival": "City B",
+      "duration": "3:00:00",
+      "trip": 1
+    }
+  },
+  {
+    "model": "manager.ticket",
+
+    "pk": 1,
+    "fields": {
+      "user": 1,
+      "price": 300.00,
+      "route": 1,
+      "date": "2023-03-25",
+      "number": 123456
+    }
+  }
+]

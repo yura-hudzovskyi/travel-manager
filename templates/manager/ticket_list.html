@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Your tickets</h1>
+  <ol>
+  {% for ticket in ticket_list %}
+    <li>{{ ticket.user }}</li>
+  {% endfor %}
+  </ol>
+
+{% endblock %}
