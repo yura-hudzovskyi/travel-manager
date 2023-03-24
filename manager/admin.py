@@ -28,7 +28,7 @@ class RouteAdmin(admin.ModelAdmin):
 
 @admin.register(Ticket)
 class TicketAdmin(admin.ModelAdmin):
-    list_display = ["user", "price", "route", "date", "number"]
+    list_display = ["user", "route", "date", "number"]
     list_filter = ["route__trip", "date"]
     search_fields = ["user__username", "route__trip__title"]
     ordering = ["date"]

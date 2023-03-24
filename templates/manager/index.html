@@ -1,11 +1,29 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+
 {% block content %}
-
-	<main class="py-4">
-		<div class="container">
-			<h2>Welcome to the Travel Manager</h2>
-			<p>Use the navigation menu above to access the different features of the travel manager.</p>
-		</div>
-	</main>
-
+{#  <h1>Create Ticket</h1>#}
+{#  <form method="post">#}
+{#    {% csrf_token %}#}
+{#    <label for="route">Route:</label>#}
+{#    <select name="route" id="route">#}
+{#      {% for route in routes %}#}
+{#        <option value="{{ route.id }}">{{ route.departure }} - {{ route.arrival }}</option>#}
+{#      {% endfor %}#}
+{#    </select><br><br>#}
+{#    <label for="trip">Trip:</label>#}
+{#    <select name="trip" id="trip">#}
+{#      {% for trip in trips %}#}
+{#        <option value="{{ trip.id }}">{{ trip.title }}</option>#}
+{#      {% endfor %}#}
+{#    </select><br><br>#}
+{#    <label for="hotel">Hotel:</label>#}
+{#    <select name="hotel" id="hotel">#}
+{#      {% for hotel in hotels %}#}
+{#        <option value="{{ hotel.id }}">{{ hotel.name }}</option>#}
+{#      {% endfor %}#}
+{#    </select><br><br>#}
+{#    <label for="date">Date:</label>#}
+{#    <input type="date" name="date"><br><br>#}
+{#    <input type="submit" value="Create Ticket">#}
+{#  </form>#}
 {% endblock %}

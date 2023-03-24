@@ -10,6 +10,7 @@ from .views import (
     RouteDetailView,
     TripDetailView,
     TicketDetailView,
+    create_ticket as ticket_create_view, ajax_load_routes_and_hotels,
 )
 
 urlpatterns = [
@@ -22,6 +23,8 @@ urlpatterns = [
     path("routes/<int:pk>/", RouteDetailView.as_view(), name="route-detail"),
     path("trips/<int:pk>/", TripDetailView.as_view(), name="trip-detail"),
     path("tickets/<int:pk>/", TicketDetailView.as_view(), name="ticket-detail"),
+    path("tickets/create/", ticket_create_view, name="ticket-create"),
+    path("tickets/create/ajax", ajax_load_routes_and_hotels, name="ajax_load_routes_and_hotels"),
 ]
 
 app_name = "manager"
