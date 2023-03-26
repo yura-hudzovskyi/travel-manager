@@ -1,33 +1,55 @@
+{#{% extends 'base.html' %}#}
+{##}
+{#{% block content %}#}
+{#  <div class="container mt-5">#}
+{#    <h1>{{ trip.title }}</h1>#}
+{#    <p class="text-muted">Price: {{ trip.price }}</p>#}
+{#    <p>{{ trip.description }}</p>#}
+{##}
+{#    <h2>Routes</h2>#}
+{#    <table class="table table-striped">#}
+{#      <thead>#}
+{#        <tr>#}
+{#          <th>Departure</th>#}
+{#          <th>Arrival</th>#}
+{#          <th>Duration</th>#}
+{#        </tr>#}
+{#      </thead>#}
+{#      <tbody>#}
+{#        {% for route in trip.routes.all %}#}
+{#          <tr>#}
+{#            <td>{{ route.departure }}</td>#}
+{#            <td>{{ route.arrival }}</td>#}
+{#            <td>{{ route.duration }}</td>#}
+{#          </tr>#}
+{#        {% empty %}#}
+{#          <tr>#}
+{#            <td colspan="3">No routes found.</td>#}
+{#          </tr>#}
+{#        {% endfor %}#}
+{#      </tbody>#}
+{#    </table>#}
+{#  </div>#}
+{#{% endblock %}#}
+
+
 {% extends 'base.html' %}
 
 {% block content %}
-  <div class="container mt-5">
-    <h1>{{ trip.title }}</h1>
-    <p class="text-muted">Price: {{ trip.price }}</p>
-    <p>{{ trip.description }}</p>
-
-    <h2>Routes</h2>
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>Departure</th>
-          <th>Arrival</th>
-          <th>Duration</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for route in trip.routes.all %}
-          <tr>
-            <td>{{ route.departure }}</td>
-            <td>{{ route.arrival }}</td>
-            <td>{{ route.duration }}</td>
-          </tr>
-        {% empty %}
-          <tr>
-            <td colspan="3">No routes found.</td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
+  <h1>{{ trip.title }}</h1>
+  <p>{{ trip.description }}</p>
+  <p>Price: ${{ trip.price }}</p>
+  <h2>Routes</h2>
+  <ul>
+    {% for route in trip.routes.all %}
+      <li>{{ route.departure }} - {{ route.arrival }} ({{ route.duration }})</li>
+    {% endfor %}
+  </ul>
+  <h2>Hotels</h2>
+  <ul>
+    {% for hotel in hotels %}
+      <li>{{ hotel.name }} - {{ hotel.price }}</li>
+    {% endfor %}
+  </ul>
+  <a href="{% url 'manager:ticket-create' trip.pk %}">Create Ticket</a>
 {% endblock %}
