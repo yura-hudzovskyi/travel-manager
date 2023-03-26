@@ -1,11 +1,29 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block content %}
-  <h1>Your tickets</h1>
-  <ol>
-  {% for ticket in ticket_list %}
-    <li>{{ ticket.user }}</li>
-  {% endfor %}
-  </ol>
-
+<section class="probootstrap-cover overflow-hidden relative"  style="background-image: url('/assets/images/bg_1.jpg');" data-stellar-background-ratio="0.5" id="section-home">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row text-center mb-5 probootstrap-animate">
+      <div class="col-md-12">
+        <h2 class="display-1 border-bottom probootstrap-section-heading">My tickets</h2>
+      </div>
+    </div>
+  </div>
+  <section class="probootstrap_section">
+        <div class="row probootstrap-animate">
+          <div class="col-md-12">
+            <div class="owl-carousel js-owl-carousel">
+              {% for ticket in ticket_list %}
+                <a class="probootstrap-slide bg-dark" href="{% url 'manager:ticket-detail' pk=ticket.pk%}" style="opacity: 70%">
+                  <p style="color: white">{{ ticket.number }}</p>
+                  <p style="color: white">{{ ticket.date }}</p>
+                  <p style="color: white">{{ ticket.route.trip }}</p>
+                </a>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+  </section>
+</section>
 {% endblock %}

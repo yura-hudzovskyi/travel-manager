@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark probootstrap_navbar" id="probootstrap-navbar">
   <div class="container">
-    <a class="navbar-brand" href="/">Places</a>
+    <a class="navbar-brand" href="/">Travel manager</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#probootstrap-menu" aria-controls="probootstrap-menu" aria-expanded="false" aria-label="Toggle navigation">
       <span><i class="ion-navicon"></i></span>
     </button>
@@ -13,7 +13,10 @@
 
         {% if user.is_authenticated %}
           <li class="nav-item">
-            <span class="nav-link">Welcome, {{ user.username }}</span>
+            <span class="nav-link" style="color: white">Welcome, {{ user.username }}</span>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'manager:ticket-list' %}">My ticket</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{% url 'logout' %}">Log out</a>

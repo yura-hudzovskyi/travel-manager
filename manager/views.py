@@ -1,11 +1,12 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse, HttpRequest
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+from django.urls import reverse_lazy
 from django.views import generic
 from django.views.generic import CreateView
 
-
+from manager.forms import TicketForm
 from manager.models import Hotel, Route, Trip, Ticket
 
 
@@ -25,17 +26,19 @@ class RouteListView(LoginRequiredMixin, generic.ListView):
     model = Route
     template_name = "manager/route_list.html"
     context_object_name = "routes"
-    paginate_by = 5
+    paginate_by = 6
 
 
 class TripListView(LoginRequiredMixin, generic.ListView):
     model = Trip
-    paginate_by = 5
+    paginate_by = 6
 
 
 class TicketListView(LoginRequiredMixin, generic.ListView):
     model = Ticket
-    paginate_by = 5
+
+    def get_queryset(self):
+        return Ticket.objects.filter(user=self.request.user)
 
 
 class HotelDetailView(LoginRequiredMixin, generic.DetailView):
@@ -56,15 +59,6 @@ class TicketDetailView(LoginRequiredMixin, generic.DetailView):
     model = Ticket
 
 
-from django.shortcuts import get_object_or_404, redirect
-from django.views.generic.edit import CreateView
-from django.urls import reverse_lazy
-from django.contrib.auth.mixins import LoginRequiredMixin
-
-from manager.forms import TicketForm
-from manager.models import Trip, Route, Hotel
-
-
 class TicketCreateView(LoginRequiredMixin, CreateView):
     model = Ticket
     form_class = TicketForm
@@ -80,9 +74,10 @@ class TicketCreateView(LoginRequiredMixin, CreateView):
         trip = get_object_or_404(Trip, pk=trip_pk)
         form.instance.route = trip.routes.first()
 
-        # Set the ticket's number (assuming it's unique)
-        form.instance.number = Ticket.objects.count() + 1
-
+        # calculate the ticket's price
+        hotel_price = form.cleaned_data["hotel"].price
+        trip_price = trip.price
+        form.instance.price = hotel_price + trip_price
         return super().form_valid(form)
 
     def get_form_kwargs(self):
@@ -92,7 +87,6 @@ class TicketCreateView(LoginRequiredMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        print(self.kwargs)
         trip_pk = self.kwargs["trip_pk"]
         trip = get_object_or_404(Trip, pk=trip_pk)
         context["trip"] = trip
@@ -102,3 +96,5 @@ class TicketCreateView(LoginRequiredMixin, CreateView):
 
     def get_success_url(self):
         return reverse_lazy("manager:ticket-detail", kwargs={"pk": self.object.pk})
+
+

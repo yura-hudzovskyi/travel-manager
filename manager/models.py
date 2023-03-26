@@ -24,7 +24,7 @@ class Trip(models.Model):
     hotel = models.ManyToManyField(Hotel, related_name="trips")
 
     class Meta:
-        ordering = ["title"]
+        ordering = ["id"]
 
     def __str__(self):
         return self.title
@@ -47,18 +47,11 @@ class Ticket(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     route = models.ForeignKey(Route, on_delete=models.CASCADE, related_name="tickets")
     date = models.DateField()
-    number = models.IntegerField(unique=True, blank=True, null=True)
+    number = models.AutoField(primary_key=True, default=secrets.randbits(15))
+    price = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
 
     class Meta:
         ordering = ["date"]
 
     def __str__(self):
         return f"{self.number} - {self.user.username}"
-
-    def save(self, *args, **kwargs):
-        if not self.number:
-            self.number = int("1" + str(secrets.randbits(15)))
-            while Ticket.objects.filter(number=self.number).exists():
-                self.number = int("1" + str(secrets.randbits(15)))
-        super().save(*args, **kwargs)
-        return self
