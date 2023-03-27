@@ -7,31 +7,31 @@
       <div class="row align-items-center text-center">
         <div class="col-md">
           <h2 class="heading mb-2 display-4 font-light probootstrap-animate">Trip #{{ trip.pk }}</h2>
+          <p class="lead mb-5 probootstrap-animate"><a href="{% url 'manager:ticket-create' trip_pk=trip.pk%}" class="btn btn-primary">Buy</a></p>
         </div>
       </div>
     </div>
   </section>
-  <div class="container my-4">
-    <div class="row mb-3">
-      <div class="row">
-        <div class="col-md-6">
-          <h1 class="mb-3">Title: {{ trip.title}}</h1>
-          <h2 class="mb-3">Price: {{ trip.price }}</h2>
-          <div class="mb-3" style="word-wrap: break-word">
-            <h3 class="mb-3">Description:</h3>
-            <p style="font-size: 24px; padding-left: 40px">{{ trip.description }}</p>
-          </div>
-          <div class="col-md-6">
-            <h3 class="mb-3">Hotels:</h3>
-            <ul class="list-unstyled">
-              {% for hotel in trip.hotel.all %}
-                <li class="mb-3">
-                  <p style="font-size: 24px; padding-left: 40px">{{ hotel }}</p>
-                </li>
-              {% endfor %}
-            </ul>
-          </div>
+  <br>
+    <div class="container display-4">
+    <div class="row">
+      <div class="col-md-6">
+        <h1 class="mb-3">Title: {{ trip.title}}</h1>
+        <h2 class="mb-3">Price: {{ trip.price }}</h2>
+        <div class="mb-3" style="word-wrap: break-word">
+          <h3 class="mb-3">Description:</h3>
+          <p style="font-size: 24px; padding-left: 40px">{{ trip.description }}</p>
         </div>
+      </div>
+      <div class="col-md-6">
+        <h3 class="mb-3">Hotels:</h3>
+        <ul class="list-unstyled mb-3">
+          {% for hotel in trip.hotel.all %}
+          <li class="mb-3">
+            <p style="font-size: 24px; padding-left: 40px"><a href="{% url 'manager:hotel-detail' pk=hotel.pk %}">{{ hotel }}</a></p>
+          </li>
+          {% endfor %}
+        </ul>
       </div>
     </div>
   </div>

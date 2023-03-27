@@ -11,6 +11,7 @@ from .views import (
     TripDetailView,
     TicketDetailView,
     TicketCreateView,
+    UserCreateView,
 )
 
 urlpatterns = [
@@ -23,8 +24,12 @@ urlpatterns = [
     path("routes/<int:pk>/", RouteDetailView.as_view(), name="route-detail"),
     path("trips/<int:pk>/", TripDetailView.as_view(), name="trip-detail"),
     path("tickets/<int:pk>/", TicketDetailView.as_view(), name="ticket-detail"),
-    path("trips/<int:trip_pk>/tickets/create/", TicketCreateView.as_view(), name="ticket-create"),
-
+    path(
+        "trips/<int:trip_pk>/tickets/create/",
+        TicketCreateView.as_view(),
+        name="ticket-create",
+    ),
+    path("accounts/register/", UserCreateView.as_view(), name="register"),
 ]
 
 app_name = "manager"

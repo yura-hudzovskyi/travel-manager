@@ -1,12 +1,13 @@
+from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse, HttpRequest
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views import generic
 from django.views.generic import CreateView
 
-from manager.forms import TicketForm
+from manager.forms import TicketForm, UserCreateForm
 from manager.models import Hotel, Route, Trip, Ticket
 
 
@@ -98,3 +99,12 @@ class TicketCreateView(LoginRequiredMixin, CreateView):
         return reverse_lazy("manager:ticket-detail", kwargs={"pk": self.object.pk})
 
 
+class UserCreateView(CreateView):
+    template_name = "registration/signup.html"
+    form_class = UserCreateForm
+    success_url = reverse_lazy("manager:index")
+
+    def form_valid(self, form):
+        user = form.save()
+        login(self.request, user)
+        return redirect("manager:index")
