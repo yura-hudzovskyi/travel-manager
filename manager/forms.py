@@ -124,13 +124,21 @@ class UserUpdateForm(forms.ModelForm):
 
     def clean_email(self):
         email = self.cleaned_data["email"]
-        if User.objects.filter(email=email).exclude(username=self.instance.username).exists():
+        if (
+            User.objects.filter(email=email)
+            .exclude(username=self.instance.username)
+            .exists()
+        ):
             raise forms.ValidationError("Email already exists!")
         return email
 
     def clean_username(self):
         username = self.cleaned_data["username"]
-        if User.objects.filter(username=username).exclude(username=self.instance.username).exists():
+        if (
+            User.objects.filter(username=username)
+            .exclude(username=self.instance.username)
+            .exists()
+        ):
             raise forms.ValidationError("Username already exists!")
         return username
 
@@ -138,7 +146,7 @@ class UserUpdateForm(forms.ModelForm):
 class SetPasswordForm1(SetPasswordForm):
     class Meta:
         model = get_user_model()
-        fields = ['new_password1', 'new_password2']
+        fields = ["new_password1", "new_password2"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
