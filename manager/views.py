@@ -138,11 +138,25 @@ class UserUpdateView(LoginRequiredMixin, generic.UpdateView):
     def get_queryset(self):
         return User.objects.filter(pk=self.request.user.pk)
 
+    # add success message to context if form is valid
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.method == "GET" and self.request.GET.get("success") == "True":
+            if self.object:
+                messages.success(self.request, "Profile updated successfully")
+                context["messages"] = messages.get_messages(self.request)
+        return context
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        response["Location"] += "?success=True"
+        return response
+
 
 @login_required
 def password_change(request: HttpRequest) -> HttpResponse:
     user = request.user
-    if request.method == 'POST':
+    if request.method == "POST":
         form = SetPasswordForm1(user, request.POST)
         if form.is_valid():
             form.save()
@@ -153,4 +167,4 @@ def password_change(request: HttpRequest) -> HttpResponse:
 
     form = SetPasswordForm1(user, request.POST)
 
-    return render(request, 'registration/password_change.html', {'form': form})
+    return render(request, "registration/password_change.html", {"form": form})

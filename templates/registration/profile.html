@@ -16,7 +16,7 @@
       </div>
       <div class="row">
         <div class="col-md-12">
-          <form method="post" class="probootstrap-form mb60">
+          <form method="post" class="probootstrap-form mb60" novalidate>
             {% csrf_token %}
             <div class="row">
               <div class="col-md-6">
@@ -60,9 +60,14 @@
             <!-- END row -->
             <br>
             <br>
+            {% if messages %}
+              {% for massage in messages %}
+                <div class="alert alert-success" role="alert">
+                  {{ massage }}
+                </div>
+              {% endfor %}
+            {% endif %}
             <input type="submit" value="Update" class="btn btn-primary">
-            {{ messages.success }}
-            {{ messages.error }}
             <br>
             <p>If you want to change your password click <a href="{% url 'manager:password-change' %}">here</a></p>
           </form>

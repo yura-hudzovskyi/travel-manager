@@ -15,7 +15,6 @@ from .views import (
     UserCreateView,
     UserUpdateView,
     password_change,
-
 )
 
 urlpatterns = [
