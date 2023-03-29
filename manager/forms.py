@@ -81,3 +81,53 @@ class UserCreateForm(UserCreationForm):
             {"class": "form-control", "placeholder": "Email"}
         )
         print(self.fields["username"].error_messages)
+
+
+class UserUpdateForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ("username", "first_name", "last_name", "email")
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop("user")
+        super().__init__(*args, **kwargs)
+        self.fields["first_name"].widget.attrs.update(
+            {
+                "class": "form-control",
+                "placeholder": "First Name",
+                "value": user.first_name,
+            }
+        )
+        self.fields["last_name"].widget.attrs.update(
+            {
+                "class": "form-control",
+                "placeholder": "Last Name",
+                "value": user.last_name,
+            }
+        )
+        self.fields["email"].widget.attrs.update(
+            {
+                "class": "form-control",
+                "placeholder": "Email",
+                "value": user.email,
+            }
+        )
+        self.fields["username"].widget.attrs.update(
+            {
+                "class": "form-control",
+                "placeholder": "Username",
+                "value": user.username,
+            }
+        )
+
+    def clean_email(self):
+        email = self.cleaned_data["email"]
+        if User.objects.filter(email=email).exclude(username=self.instance.username).exists():
+            raise forms.ValidationError("Email already exists!")
+        return email
+
+    def clean_username(self):
+        username = self.cleaned_data["username"]
+        if User.objects.filter(username=username).exclude(username=self.instance.username).exists():
+            raise forms.ValidationError("Username already exists!")
+        return username

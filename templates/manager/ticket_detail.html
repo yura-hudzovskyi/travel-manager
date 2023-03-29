@@ -7,6 +7,7 @@
       <div class="row align-items-center justify-content-center text-center">
         <div class="col-md-12">
           <h1 class="heading mb-3 display-4 font-light probootstrap-animate" style="color: white">Ticket #{{ ticket.number }}</h1>
+          <a href="{% url 'manager:ticket-delete' pk=ticket.pk %}" class="btn btn-primary btn-danger probootstrap-animate">Delete</a>
         </div>
       </div>
     </div>

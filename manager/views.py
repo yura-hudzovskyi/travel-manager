@@ -1,13 +1,15 @@
-from django.contrib.auth import login
+from django.contrib.auth import login, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpRequest
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views import generic
 from django.views.generic import CreateView
+from django.contrib.auth.forms import PasswordChangeForm, UserChangeForm
 
-from manager.forms import TicketForm, UserCreateForm
+from manager.forms import TicketForm, UserCreateForm, UserUpdateForm
 from manager.models import Hotel, Route, Trip, Ticket
 
 
@@ -63,7 +65,7 @@ class TicketDetailView(LoginRequiredMixin, generic.DetailView):
 class TicketCreateView(LoginRequiredMixin, CreateView):
     model = Ticket
     form_class = TicketForm
-    template_name = "manager/create_ticket.html"
+    template_name = "manager/ticket_create.html"
     success_url = reverse_lazy("manager:ticket-detail")
 
     def form_valid(self, form):
@@ -108,3 +110,29 @@ class UserCreateView(CreateView):
         user = form.save()
         login(self.request, user)
         return redirect("manager:index")
+
+
+class TicketDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Ticket
+    success_url = reverse_lazy("manager:ticket-list")
+
+
+class UserUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = User
+    form_class = UserUpdateForm
+    template_name = "registration/profile.html"
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["user"] = self.request.user
+        return kwargs
+
+    def get_success_url(self):
+        return reverse_lazy("manager:profile", kwargs={"pk": self.object.pk})
+
+    # user can edit only his profile
+    def get_queryset(self):
+        return User.objects.filter(pk=self.request.user.pk)
