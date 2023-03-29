@@ -1,5 +1,7 @@
-from django.contrib.auth import login, get_user_model
+from django.contrib import messages
+from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpRequest
@@ -7,9 +9,9 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views import generic
 from django.views.generic import CreateView
-from django.contrib.auth.forms import PasswordChangeForm, UserChangeForm
 
-from manager.forms import TicketForm, UserCreateForm, UserUpdateForm
+
+from manager.forms import TicketForm, UserCreateForm, UserUpdateForm, SetPasswordForm1
 from manager.models import Hotel, Route, Trip, Ticket
 
 
@@ -136,3 +138,25 @@ class UserUpdateView(LoginRequiredMixin, generic.UpdateView):
     # user can edit only his profile
     def get_queryset(self):
         return User.objects.filter(pk=self.request.user.pk)
+
+    # add success message
+    def form_valid(self, form):
+        messages.success(self.request, "Profile updated successfully")
+        return super().form_valid(form)
+
+
+@login_required
+def password_change(request: HttpRequest) -> HttpResponse:
+    user = request.user
+    if request.method == 'POST':
+        form = SetPasswordForm1(user, request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("login")
+        else:
+            for error in list(form.errors.values()):
+                messages.error(request, error)
+
+    form = SetPasswordForm1(user, request.POST)
+
+    return render(request, 'registration/password_change.html', {'form': form})

@@ -1,6 +1,8 @@
 import datetime
+from django.contrib.auth.forms import SetPasswordForm
 
 from django import forms
+from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
@@ -131,3 +133,18 @@ class UserUpdateForm(forms.ModelForm):
         if User.objects.filter(username=username).exclude(username=self.instance.username).exists():
             raise forms.ValidationError("Username already exists!")
         return username
+
+
+class SetPasswordForm1(SetPasswordForm):
+    class Meta:
+        model = get_user_model()
+        fields = ['new_password1', 'new_password2']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["new_password1"].widget.attrs.update(
+            {"class": "form-control", "placeholder": "Password"}
+        )
+        self.fields["new_password2"].widget.attrs.update(
+            {"class": "form-control", "placeholder": "Confirm Password"}
+        )

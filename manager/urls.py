@@ -14,6 +14,8 @@ from .views import (
     TicketCreateView,
     UserCreateView,
     UserUpdateView,
+    password_change,
+
 )
 
 urlpatterns = [
@@ -34,6 +36,7 @@ urlpatterns = [
     path("accounts/register/", UserCreateView.as_view(), name="register"),
     path("tickets/<int:pk>/delete/", TicketDeleteView.as_view(), name="ticket-delete"),
     path("accounts/<int:pk>/profile/", UserUpdateView.as_view(), name="profile"),
+    path("accounts/password_change/", password_change, name="password-change"),
 ]
 
 app_name = "manager"
