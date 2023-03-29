@@ -135,14 +135,8 @@ class UserUpdateView(LoginRequiredMixin, generic.UpdateView):
     def get_success_url(self):
         return reverse_lazy("manager:profile", kwargs={"pk": self.object.pk})
 
-    # user can edit only his profile
     def get_queryset(self):
         return User.objects.filter(pk=self.request.user.pk)
-
-    # add success message
-    def form_valid(self, form):
-        messages.success(self.request, "Profile updated successfully")
-        return super().form_valid(form)
 
 
 @login_required
