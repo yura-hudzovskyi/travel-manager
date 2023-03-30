@@ -11,7 +11,7 @@ from django.views import generic
 from django.views.generic import CreateView
 
 
-from manager.forms import TicketForm, UserCreateForm, UserUpdateForm, SetPasswordForm1
+from manager.forms import TicketForm, UserCreateForm, UserUpdateForm, SetPasswordForm1, TripSearchForm, HotelSearchForm, RoutesSearchForm
 from manager.models import Hotel, Route, Trip, Ticket
 
 
@@ -25,6 +25,24 @@ class HotelListView(LoginRequiredMixin, generic.ListView):
     template_name = "manager/hotel_list.html"
     context_object_name = "hotels"
     paginate_by = 5
+    queryset = Hotel.objects.all()
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(HotelListView, self).get_context_data(**kwargs)
+
+        name = self.request.GET.get("name", "")
+
+        context["search"] = HotelSearchForm(initial={"name": name})
+
+        return context
+
+    def get_queryset(self):
+        form = HotelSearchForm(self.request.GET)
+
+        if form.is_valid():
+            return self.queryset.filter(name__icontains=form.cleaned_data["name"])
+
+        return self.queryset.all()
 
 
 class RouteListView(LoginRequiredMixin, generic.ListView):
@@ -32,11 +50,49 @@ class RouteListView(LoginRequiredMixin, generic.ListView):
     template_name = "manager/route_list.html"
     context_object_name = "routes"
     paginate_by = 6
+    queryset = Route.objects.all()
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(RouteListView, self).get_context_data(**kwargs)
+
+        arrival = self.request.GET.get("arrival", "")
+        departure = self.request.GET.get("departure", "")
+
+
+        context["search"] = RoutesSearchForm(initial={"arrival": arrival, "departure": departure})
+
+        return context
+
+    def get_queryset(self):
+        form = RoutesSearchForm(self.request.GET)
+
+        if form.is_valid():
+            return self.queryset.filter(arrival__icontains=form.cleaned_data["arrival"], departure__icontains=form.cleaned_data["departure"])
+
+        return self.queryset.all()
 
 
 class TripListView(LoginRequiredMixin, generic.ListView):
     model = Trip
     paginate_by = 6
+    queryset = Trip.objects.all()
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(TripListView, self).get_context_data(**kwargs)
+
+        title = self.request.GET.get("title", "")
+
+        context["search"] = TripSearchForm(initial={"title": title})
+
+        return context
+
+    def get_queryset(self):
+        form = TripSearchForm(self.request.GET)
+
+        if form.is_valid():
+            return self.queryset.filter(title__icontains=form.cleaned_data["title"])
+
+        return self.queryset.all()
 
 
 class TicketListView(LoginRequiredMixin, generic.ListView):

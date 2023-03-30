@@ -90,7 +90,7 @@ class UserUpdateForm(forms.ModelForm):
         fields = ("username", "first_name", "last_name", "email")
 
     def __init__(self, *args, **kwargs):
-        user = kwargs.get("user", None)
+        user = kwargs.pop("user")
         super().__init__(*args, **kwargs)
         self.fields["first_name"].widget.attrs.update(
             {
@@ -155,3 +155,60 @@ class SetPasswordForm1(SetPasswordForm):
         self.fields["new_password2"].widget.attrs.update(
             {"class": "form-control", "placeholder": "Confirm Password"}
         )
+
+
+class TripSearchForm(forms.Form):
+    title = forms.CharField(
+        required=False,
+        label="",
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-control form-control-lg form-control-borderless",
+                "type": "text",
+                "placeholder": "Search",
+                "aria-label": "Search",
+            }
+        )
+    )
+
+
+class HotelSearchForm(forms.Form):
+    name = forms.CharField(
+        required=False,
+        label="",
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-control form-control-lg form-control-borderless",
+                "type": "text",
+                "placeholder": "Search",
+                "aria-label": "Search",
+            }
+        )
+    )
+
+
+class RoutesSearchForm(forms.Form):
+    departure = forms.CharField(
+        required=False,
+        label="",
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-control form-control-lg form-control-borderless",
+                "type": "text",
+                "placeholder": "Departure",
+                "aria-label": "Search",
+            }
+        )
+    )
+    arrival = forms.CharField(
+        required=False,
+        label="",
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-control form-control-lg form-control-borderless",
+                "type": "text",
+                "placeholder": "Arrival",
+            }
+        )
+    )
+

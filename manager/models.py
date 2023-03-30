@@ -11,7 +11,7 @@ class Hotel(models.Model):
     description = models.TextField()
 
     class Meta:
-        ordering = ["name"]
+        ordering = ["id"]
 
     def __str__(self):
         return self.name
@@ -37,7 +37,7 @@ class Route(models.Model):
     trip = models.ForeignKey(Trip, on_delete=models.CASCADE, related_name="routes")
 
     class Meta:
-        ordering = ["duration"]
+        ordering = ["id"]
 
     def __str__(self):
         return f"{self.departure} - {self.arrival}"
