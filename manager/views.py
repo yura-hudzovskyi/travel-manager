@@ -32,7 +32,7 @@ class HotelListView(LoginRequiredMixin, generic.ListView):
     model = Hotel
     template_name = "manager/hotel_list.html"
     context_object_name = "hotels"
-    paginate_by = 5
+    paginate_by = 6
     queryset = Hotel.objects.all()
 
     def get_context_data(self, *, object_list=None, **kwargs):
