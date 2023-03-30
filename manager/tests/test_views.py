@@ -70,7 +70,7 @@ class TicketCreateViewTest(TestCase):
             data={
                 "hotel": hotel1.id,
                 "route": route1.id,
-                "date": datetime.date.today()
+                "date": datetime.date.today(),
             },
         )
 
@@ -102,11 +102,14 @@ class TicketCreateViewTest(TestCase):
             data={
                 "hotel": hotel1.id,
                 "route": route1.id,
-                "date": datetime.date.today()
+                "date": datetime.date.today(),
             },
         )
 
-        self.assertRedirects(response, reverse("manager:ticket-detail", args=[Ticket.objects.first().number]))
+        self.assertRedirects(
+            response,
+            reverse("manager:ticket-detail", args=[Ticket.objects.first().number]),
+        )
 
 
 class UserUpdateView(TestCase):
@@ -121,7 +124,9 @@ class UserUpdateView(TestCase):
         self.client.force_login(user)
 
     def test_that_user_data_displayed_in_form(self) -> None:
-        response = self.client.get(reverse("manager:profile", args=[User.objects.first().id]))
+        response = self.client.get(
+            reverse("manager:profile", args=[User.objects.first().id])
+        )
 
         self.assertContains(response, "Test")
         self.assertContains(response, "User")
@@ -139,14 +144,20 @@ class UserUpdateView(TestCase):
             },
         )
 
-        self.assertRedirects(response, reverse("manager:profile", args=[User.objects.first().id]) + "?success=True")
+        self.assertRedirects(
+            response,
+            reverse("manager:profile", args=[User.objects.first().id])
+            + "?success=True",
+        )
         self.assertEqual(User.objects.first().first_name, "Test1")
         self.assertEqual(User.objects.first().last_name, "User1")
         self.assertEqual(User.objects.first().username, "testuser1")
         self.assertEqual(User.objects.first().email, "admin@admin.com")
 
     def test_that_success_message_displayed(self) -> None:
-        redirect_url = reverse("manager:profile", args=[User.objects.first().id]) + "?success=True"
+        redirect_url = (
+            reverse("manager:profile", args=[User.objects.first().id]) + "?success=True"
+        )
         response = self.client.get(redirect_url)
         self.assertContains(response, "Profile updated successfully")
 

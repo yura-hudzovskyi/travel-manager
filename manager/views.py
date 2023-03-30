@@ -11,7 +11,15 @@ from django.views import generic
 from django.views.generic import CreateView
 
 
-from manager.forms import TicketForm, UserCreateForm, UserUpdateForm, SetPasswordForm1, TripSearchForm, HotelSearchForm, RoutesSearchForm
+from manager.forms import (
+    TicketForm,
+    UserCreateForm,
+    UserUpdateForm,
+    SetPasswordForm1,
+    TripSearchForm,
+    HotelSearchForm,
+    RoutesSearchForm,
+)
 from manager.models import Hotel, Route, Trip, Ticket
 
 
@@ -58,8 +66,9 @@ class RouteListView(LoginRequiredMixin, generic.ListView):
         arrival = self.request.GET.get("arrival", "")
         departure = self.request.GET.get("departure", "")
 
-
-        context["search"] = RoutesSearchForm(initial={"arrival": arrival, "departure": departure})
+        context["search"] = RoutesSearchForm(
+            initial={"arrival": arrival, "departure": departure}
+        )
 
         return context
 
@@ -67,7 +76,10 @@ class RouteListView(LoginRequiredMixin, generic.ListView):
         form = RoutesSearchForm(self.request.GET)
 
         if form.is_valid():
-            return self.queryset.filter(arrival__icontains=form.cleaned_data["arrival"], departure__icontains=form.cleaned_data["departure"])
+            return self.queryset.filter(
+                arrival__icontains=form.cleaned_data["arrival"],
+                departure__icontains=form.cleaned_data["departure"],
+            )
 
         return self.queryset.all()
 

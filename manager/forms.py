@@ -168,7 +168,7 @@ class TripSearchForm(forms.Form):
                 "placeholder": "Search",
                 "aria-label": "Search",
             }
-        )
+        ),
     )
 
 
@@ -183,7 +183,7 @@ class HotelSearchForm(forms.Form):
                 "placeholder": "Search",
                 "aria-label": "Search",
             }
-        )
+        ),
     )
 
 
@@ -198,7 +198,7 @@ class RoutesSearchForm(forms.Form):
                 "placeholder": "Departure",
                 "aria-label": "Search",
             }
-        )
+        ),
     )
     arrival = forms.CharField(
         required=False,
@@ -209,6 +209,5 @@ class RoutesSearchForm(forms.Form):
                 "type": "text",
                 "placeholder": "Arrival",
             }
-        )
+        ),
     )
-
