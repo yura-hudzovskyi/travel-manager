@@ -90,7 +90,7 @@ class UserUpdateForm(forms.ModelForm):
         fields = ("username", "first_name", "last_name", "email")
 
     def __init__(self, *args, **kwargs):
-        user = kwargs.pop("user")
+        user = kwargs.get("user", None)
         super().__init__(*args, **kwargs)
         self.fields["first_name"].widget.attrs.update(
             {
