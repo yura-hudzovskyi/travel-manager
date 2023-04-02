@@ -1,7 +1,12 @@
 # Travel Manager Project
 Django project for managing your travel plans
 ## Check it out
-[Travel Manager  deployed to Render](link)
+[Travel Manager  deployed to Render](https://travel-manager.onrender.com/)
+```text
+YOU CAN USE THIS CREDENTIALS TO LOGIN OR REGISTER NEW USER
+username: trav3l
+password: 2wsxvfr4
+```
 ## Installation
 Python3 must be already installed
 ```shell
