@@ -1,33 +1,39 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-  <div class="container mt-5">
-    <h1>{{ trip.title }}</h1>
-    <p class="text-muted">Price: {{ trip.price }}</p>
-    <p>{{ trip.description }}</p>
-
-    <h2>Routes</h2>
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>Departure</th>
-          <th>Arrival</th>
-          <th>Duration</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for route in trip.routes.all %}
-          <tr>
-            <td>{{ route.departure }}</td>
-            <td>{{ route.arrival }}</td>
-            <td>{{ route.duration }}</td>
-          </tr>
-        {% empty %}
-          <tr>
-            <td colspan="3">No routes found.</td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+  <section class="probootstrap-cover overflow-hidden relative"  style="background-image: url('{% static "images/bg_1.jpg" %}');" data-stellar-background-ratio="0.5" id="section-home">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row align-items-center text-center">
+        <div class="col-md">
+          <h2 class="heading mb-2 display-4 font-light probootstrap-animate">Trip #{{ trip.pk }}</h2>
+          <p class="lead mb-5 probootstrap-animate"><a href="{% url 'manager:ticket-create' trip_pk=trip.pk%}" class="btn btn-primary">Buy</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <br>
+    <div class="container display-4">
+    <div class="row">
+      <div class="col-md-6">
+        <h1 class="mb-3">Title: {{ trip.title}}</h1>
+        <h2 class="mb-3">Price: {{ trip.price }}</h2>
+        <div class="mb-3" style="word-wrap: break-word">
+          <h3 class="mb-3">Description:</h3>
+          <p style="font-size: 24px; padding-left: 40px">{{ trip.description }}</p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <h3 class="mb-3">Hotels:</h3>
+        <ul class="list-unstyled mb-3">
+          {% for hotel in trip.hotel.all %}
+          <li class="mb-3">
+            <p style="font-size: 24px; padding-left: 40px"><a href="{% url 'manager:hotel-detail' pk=hotel.pk %}">{{ hotel }}</a></p>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
   </div>
 {% endblock %}

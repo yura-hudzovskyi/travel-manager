@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+  <section class="probootstrap-cover overflow-hidden relative" style="background-image: url('{% static "images/bg_1.jpg" %}');" data-stellar-background-ratio="0.5" id="section-home">
+  <div class="overlay"></div>
+  </section>
+  <!-- END section -->
+  <br>
+  <br>
+  <section class="probootstrap-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h2 class="mt0 mb50 text-center">Edit Profile</h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <form method="post" class="probootstrap-form mb60" novalidate>
+            {% csrf_token %}
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="{{ form.first_name.id_for_label }}">First name</label>
+                  {{ form.first_name }}
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="">Last name</label>
+                  {{ form.last_name }}
+                </div>
+              </div>
+            </div>
+            <!-- END row -->
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="phone">Username</label>
+                  {{ form.username }}
+                  {% if form.username.errors %}
+                    <div class="alert alert-danger" role="alert">
+                      {{ form.username.errors }}
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="address">Email</label>
+                  {{ form.email }}
+                  {% if form.email.errors %}
+                    <div class="alert alert-danger" role="alert">
+                      {{ form.email.errors }}
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+            <!-- END row -->
+            <br>
+            <br>
+            {% if messages %}
+              {% for massage in messages %}
+                <div class="alert alert-success" role="alert">
+                  {{ massage }}
+                </div>
+              {% endfor %}
+            {% endif %}
+            <input type="submit" value="Update" class="btn btn-primary">
+            <br>
+            <p>If you want to change your password click <a href="{% url 'manager:password-change' %}">here</a></p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

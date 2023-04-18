@@ -1,30 +1,42 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %}Routes{% endblock %}
 
 {% block content %}
-  <h1>Routes</h1>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Departure</th>
-        <th>Arrival</th>
-        <th>Duration</th>
-        <th>Trip</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for route in routes %}
-        <tr>
-          <td>{{ route.departure }}</td>
-          <td>{{ route.arrival }}</td>
-          <td>{{ route.duration }}</td>
-          <td>{{ route.trip.title }}</td>
-        </tr>
-      {% empty %}
-        <tr>
-          <td colspan="4">No routes found.</td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+  <section class="probootstrap-cover overflow-hidden relative"  style="background-image: url('{% static "images/bg_1.jpg" %}');" data-stellar-background-ratio="0.5" id="section-home">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row text-center mb-5 probootstrap-animate">
+        <div class="col-md-12">
+          <h2 class="display-1 border-bottom probootstrap-section-heading">Routes</h2>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="probootstrap_section" id="section-city-guides">
+    <div class="container">
+      {% include "includes/search.html" %}
+      <div class="row mb-3">
+        <div class="row">
+          {% for route in routes %}
+            <div class="col-md-6" >
+              <div class="media probootstrap-media d-flex align-items-stretch mb-4 probootstrap-animate">
+                <div class="media-body" style="word-wrap: break-word !important; white-space: normal">
+                  <h5 class="mb-3"><a href="{% url 'manager:route-detail' pk=route.pk %}">{{ route.pk }}: {{ route.departure }} - {{ route.arrival }}</a></h5>
+                  <div>
+                    <p>Trip: {{ route.trip }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% if forloop.counter|divisibleby:2 and not forloop.last %}
+              </div>
+              <div class="row">
+            {% endif %}
+          {% endfor %}
+        {% include 'includes/pagination.html' %}
+        </div>
+      </div>
+    </div>
+  </section>
 {% endblock %}

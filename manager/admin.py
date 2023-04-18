@@ -5,7 +5,7 @@ from manager.models import Trip, Hotel, Route, Ticket
 
 @admin.register(Trip)
 class TripAdmin(admin.ModelAdmin):
-    list_display = ["title", "price", "hotel"]
+    list_display = ["title", "price"]
     list_filter = ["hotel"]
     search_fields = ["title", "hotel__name"]
     ordering = ["title"]

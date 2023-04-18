@@ -1,3 +1,5 @@
+import secrets
+
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -9,7 +11,7 @@ class Hotel(models.Model):
     description = models.TextField()
 
     class Meta:
-        ordering = ["name"]
+        ordering = ["id"]
 
     def __str__(self):
         return self.name
@@ -19,10 +21,10 @@ class Trip(models.Model):
     title = models.CharField(max_length=50)
     description = models.TextField()
     price = models.DecimalField(max_digits=6, decimal_places=2)
-    hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE, related_name="trips")
+    hotel = models.ManyToManyField(Hotel, related_name="trips")
 
     class Meta:
-        ordering = ["title"]
+        ordering = ["id"]
 
     def __str__(self):
         return self.title
@@ -35,7 +37,7 @@ class Route(models.Model):
     trip = models.ForeignKey(Trip, on_delete=models.CASCADE, related_name="routes")
 
     class Meta:
-        ordering = ["duration"]
+        ordering = ["id"]
 
     def __str__(self):
         return f"{self.departure} - {self.arrival}"
@@ -45,7 +47,8 @@ class Ticket(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     route = models.ForeignKey(Route, on_delete=models.CASCADE, related_name="tickets")
     date = models.DateField()
-    number = models.IntegerField(unique=True)
+    number = models.AutoField(primary_key=True, default=secrets.randbits(15))
+    price = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
 
     class Meta:
         ordering = ["date"]

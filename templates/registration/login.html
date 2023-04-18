@@ -94,28 +94,31 @@
 {% endblock %}
 
 {% block content %}
-<main class="form-signin w-100 m-auto">
-  <form method="post" action="{% url 'login' %}" class="p-4 rounded-3 bg-light">
-    {% csrf_token %}
-    <h1 class="h3 mb-3 fw-normal text-center">Please sign in</h1>
-    <br>
-    <div class="form-floating mb-3">
-      <input type="text" name="username" class="form-control" id="floatingInput" placeholder="0">
-      <label for="floatingInput">Username</label>
-    </div>
-    <div class="form-floating mb-3">
-      <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password">
-      <label for="floatingPassword">Password</label>
-    </div>
-    <div class="form-check mb-3">
-      <input class="form-check-input" type="checkbox" name="remember_me" value="remember-me" id="rememberMe">
-      <label class="form-check-label" for="rememberMe">
-        Remember me
-      </label>
-    </div>
-    <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
-    <p class="mt-5 mb-3 text-muted">&copy; 2023</p>
-  </form>
-</main>
-
+  <main class="form-signin w-100 m-auto">
+    <form method="post" action="{% url 'login' %}" class="p-4 rounded-3 bg-light">
+      {% csrf_token %}
+      <h1 class="h3 mb-3 fw-normal text-center">Please sign in</h1>
+      <br>
+      {% if form.errors %}
+        <p class="text-danger">Your username and password didn't match. Please try again.</p>
+      {% endif %}
+      <div class="form-floating mb-3">
+        <input type="text" name="username" class="form-control" id="floatingInput" placeholder="0">
+        <label for="floatingInput">Username</label>
+      </div>
+      <div class="form-floating mb-3">
+        <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password">
+        <label for="floatingPassword">Password</label>
+      </div>
+      <div class="form mb-3">
+        <label class="">
+          Don't have an account? <a href="{% url 'manager:register' %}">Register</a>
+        </label>
+      </div>
+      <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+      <p class="mt-5 mb-3 text-muted">&copy; 2023</p>
+    </form>
+  </main>
+  {% block footer %}
+  {% endblock %}
 {% endblock %}
