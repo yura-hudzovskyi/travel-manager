@@ -1,4 +1,4 @@
-# build.sh
+# build_files.sh
 set -o errexit
 
 pip install -r requirements.txt
