@@ -3,11 +3,7 @@
   "builds": [
     {
       "src": "config/wsgi.py",
-      "use": "@vercel/python",
-      "config": {
-          "maxLambdaSize": "50mb",
-          "pythonVersion": "3.9"
-      }
+      "use": "@vercel/python"
     },
     {
       "src": "build.sh",
