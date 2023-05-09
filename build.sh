@@ -2,8 +2,8 @@
 
 pip install -r requirements.txt
 
-python -m pip install -r requirements.txt
-python -m manage.py collectstatic --noinput
+pip install -r requirements.txt
+python manage.py collectstatic --noinput
 
-python -m manage.py makemigrations
-python -m manage.py migrate
+python manage.py makemigrations
+python manage.py migrate
