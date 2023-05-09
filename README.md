@@ -1,7 +1,7 @@
 # Travel Manager Project
 Django project for managing your travel plans
 ## Check it out
-[Travel Manager  deployed to Render](https://travel-manager-tau.vercel.app/)
+[Travel Manager  deployed to Vercel](https://travel-manager-tau.vercel.app/)
 
 ### Demo user
 You can use this user to check out the site or create your own account
