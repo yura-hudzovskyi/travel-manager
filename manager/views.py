@@ -15,7 +15,7 @@ from manager.forms import (
     TicketForm,
     UserCreateForm,
     UserUpdateForm,
-    SetPasswordForm1,
+    PasswordChangeForm,
     TripSearchForm,
     HotelSearchForm,
     RoutesSearchForm,
@@ -58,7 +58,7 @@ class RouteListView(LoginRequiredMixin, generic.ListView):
     template_name = "manager/route_list.html"
     context_object_name = "routes"
     paginate_by = 6
-    queryset = Route.objects.all()
+    queryset = Route.objects.select_related("trip")
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(RouteListView, self).get_context_data(**kwargs)
@@ -87,7 +87,7 @@ class RouteListView(LoginRequiredMixin, generic.ListView):
 class TripListView(LoginRequiredMixin, generic.ListView):
     model = Trip
     paginate_by = 6
-    queryset = Trip.objects.all()
+    queryset = Trip.objects.prefetch_related("hotel")
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(TripListView, self).get_context_data(**kwargs)
@@ -225,7 +225,7 @@ class UserUpdateView(LoginRequiredMixin, generic.UpdateView):
 def password_change(request: HttpRequest) -> HttpResponse:
     user = request.user
     if request.method == "POST":
-        form = SetPasswordForm1(user, request.POST)
+        form = PasswordChangeForm(user, request.POST)
         if form.is_valid():
             form.save()
             return redirect("login")
@@ -233,6 +233,6 @@ def password_change(request: HttpRequest) -> HttpResponse:
             for error in list(form.errors.values()):
                 messages.error(request, error)
 
-    form = SetPasswordForm1(user, request.POST)
+    form = PasswordChangeForm(user, request.POST)
 
     return render(request, "registration/password_change.html", {"form": form})
