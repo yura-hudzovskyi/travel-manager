@@ -15,15 +15,17 @@ Python3 must be already installed
 git clone https://github.com/yura-hudzovskyi/travel-manager.git
 cd travel-manager
 python -m venv venv
-source venv/bin/activate
+source venv/bin/activate (on Linux/maOS)
+venv\Scripts\activate (on Windows)
 pip install -r requirements.txt
+python manage.py migrate
+export SECRET_KEY="<your_secret_key>"
 python manage.py runserver
 ```
+You can generate your secret key in [Djecrety](https://djecrety.ir/)
 ## Features
 * Authentication/Registration functionality
-* Create your own tickets
-* Delete your tickets
-* Manage your tickets
+* Manage your tickets(create, delete)
 * Add new routes, trips and hotels in admin panel
 * Edit your profile(also can change your password)
 
