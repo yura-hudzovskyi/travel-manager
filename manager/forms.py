@@ -142,7 +142,7 @@ class UserUpdateForm(forms.ModelForm):
         return username
 
 
-class SetPasswordForm1(SetPasswordForm):
+class PasswordChangeForm(SetPasswordForm):
     class Meta:
         model = get_user_model()
         fields = ["new_password1", "new_password2"]

@@ -2,8 +2,10 @@
 Django project for managing your travel plans
 ## Check it out
 [Travel Manager  deployed to Render](https://travel-manager.onrender.com/)
+
+### Demo user
+You can use this user to check out the site or create your own account
 ```text
-YOU CAN USE THIS CREDENTIALS TO LOGIN OR REGISTER NEW USER
 username: trav3l
 password: 2wsxvfr4
 ```
@@ -29,5 +31,5 @@ You can generate your secret key in [Djecrety](https://djecrety.ir/)
 
 ## Demo
 
-![Demo](img.png)
-![](img_1.png)
+![Demo](DEMO/img.png)
+![](DEMO/img_1.png)
